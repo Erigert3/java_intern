@@ -1,34 +1,22 @@
 import com.example.entity.Flight;
 import com.example.entity.User;
+import com.example.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("jpa-example-pu");
 
-        EntityManager em = emf.createEntityManager();
+        //user entity test
+        UserRepository userRepo = new UserRepository();
+        User user1 = new User("test user 1", "password1", "tester");
+        User user2 = new User("test user 2", "password2", "developer");
+        User user3 = new User("test user 3", "password3", "tester");
+        userRepo.saveUser(user1);
+        userRepo.saveUser(user2);
+        userRepo.saveUser(user3);
 
-        System.out.println("Connected successfully!");
 
-        em.getTransaction().begin();
-        createNewUser(em, "User", "test", "role");
-        createNewFlight(em, "TIA", "FRA", "ITA");
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
-    }
-
-    private static void createNewUser(EntityManager em, String username, String password, String role){
-        User user = new User(username, password, role);
-        em.persist(user);
-    }
-
-    private static void createNewFlight(EntityManager em, String origin, String destination, String airline){
-        Flight flight = new Flight(origin, destination, airline);
-        em.persist(flight);
     }
 }
