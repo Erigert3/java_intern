@@ -1,65 +1,61 @@
 package com.example.repository;
 
-import com.example.entity.User;
+import com.example.entity.Flight;
 import com.example.util.Util;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 
 import java.util.Collections;
 import java.util.List;
 
-public class UserRepository {
+public class FlightRepository {
 
-    public void saveUser(User user) {
+    public void saveFlight(Flight flight) {
         EntityManager em = Util.getEntityManager();
-
         try {
             em.getTransaction().begin();
-            em.persist(user);
+            em.persist(flight);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("Could not add User to database: " + e.getMessage());
+            System.out.println("Could not add Flight to database: " + e.getMessage());
         } finally {
             em.close();
         }
     }
 
-    public void deleteUser(int id) {
+    public void deleteFlight(int id) {
         EntityManager em = Util.getEntityManager();
         try {
             em.getTransaction().begin();
-            User user = em.find(User.class, id);
-            if (user != null) {
-                em.remove(user);
+            Flight flight = em.find(Flight.class, id);
+            if (flight != null) {
+                em.remove(flight);
             }
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("User with id: " + id + "could not be deleted" + e.getMessage());
+            System.out.println("Flight with id: " + id + " could not be deleted: " + e.getMessage());
         } finally {
             em.close();
         }
     }
 
-    public User findUserById(int id) {
+    public Flight findFlightById(int id) {
         try (EntityManager em = Util.getEntityManager()) {
-            return em.find(User.class, id);
+            return em.find(Flight.class, id);
         } catch (Exception e) {
-            System.out.println("User with id: " + id + " was not found in the database: " + e.getMessage());
+            System.out.println("Flight with id: " + id + " was not found in the database: " + e.getMessage());
         }
         return null;
     }
 
-
-    public List<User> getAllUsers() {
+    public List<Flight> getAllFlights() {
         try (EntityManager em = Util.getEntityManager()) {
-            return em.createQuery("SELECT u FROM User u").getResultList();
+            return em.createQuery("SELECT f FROM Flight f", Flight.class).getResultList();
         } catch (Exception e) {
-            System.out.println("Could not get list of all users: " + e.getMessage());
+            System.out.println("Could not get list of all flights: " + e.getMessage());
         }
         return Collections.emptyList();
     }
-
 
 }

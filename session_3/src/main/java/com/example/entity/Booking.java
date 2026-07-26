@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -66,6 +67,10 @@ public class Booking {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setFlights(Set<Flight> flights){this.flights = flights;}
+
+    public Set<Flight> getFlights() {return flights;}
 }
 
 

@@ -3,6 +3,7 @@ package com.example.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -27,7 +28,7 @@ public class User {
     private UserDetails userDetails;
 
     @OneToMany(mappedBy = "user")
-    private ArrayList<Booking> bookings;
+    private List<Booking> bookings;
 
     public User (){}
 
@@ -77,11 +78,11 @@ public class User {
         this.userDetails = userDetails;
     }
 
-    public ArrayList<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(ArrayList<Booking> bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 
