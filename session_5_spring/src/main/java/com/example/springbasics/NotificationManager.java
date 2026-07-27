@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationManager {
 
+
     private NotificationService notificationService;
 
     public void notifyUser(String message){
