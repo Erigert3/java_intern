@@ -1,5 +1,10 @@
 package com.example.training;
 
+import com.example.training.entity.User;
+import com.example.training.repository.UserRepository;
+import com.example.training.util.Util;
+import jakarta.persistence.EntityManager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -7,7 +12,7 @@ import java.util.Properties;
 public class Main {
 
     public static void main(String[] args) {
-        Properties configuration = loadConfiguration();
+        /*Properties configuration = loadConfiguration();
 
         String prefix = configuration.getProperty("greeting.prefix");
         String environment = configuration.getProperty("environment.name");
@@ -38,6 +43,7 @@ public class Main {
                     "Could not load application.properties",
                     exception
             );
-        }
+        }*/
+
     }
 }
