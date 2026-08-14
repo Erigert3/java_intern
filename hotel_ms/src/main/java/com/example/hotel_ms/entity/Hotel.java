@@ -27,7 +27,7 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
-    protected Hotel() {}
+    public Hotel() {}
 
     public Hotel(String name, String city, String address, Integer starRating) {
         this.name = name;

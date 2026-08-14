@@ -33,8 +33,8 @@ public class Room {
     @JsonIgnore
     private Hotel hotel;
 
-    //@OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Reservation> reservations;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
 
     protected Room() {}
 

@@ -1,14 +1,17 @@
 package com.example.hotel_ms.controller;
 
-import com.example.hotel_ms.entity.Hotel;
-import com.example.hotel_ms.entity.Room;
+import com.example.hotel_ms.dto.RoomCreateRequest;
+import com.example.hotel_ms.dto.RoomResponse;
+import com.example.hotel_ms.dto.RoomStatusUpdateRequest;
 import com.example.hotel_ms.service.RoomService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/rooms")
@@ -20,20 +23,41 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Room>> getAllRooms(){
-        return ResponseEntity.of(roomService.getAllRooms());
+    @PostMapping("/hotels/{hotelId}/rooms")
+    public ResponseEntity<RoomResponse> addRoomToHotel(
+            @PathVariable Long hotelId,
+            @Valid @RequestBody RoomCreateRequest request) {
+        RoomResponse created = roomService.addRoomToHotel(hotelId, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping("/{id}/hotel")
-    public ResponseEntity<Hotel> getHotelOfRoom(@PathVariable Long id){
-        return ResponseEntity.of(roomService.getHotelOfRoom(id));
+    @GetMapping("/hotels/{hotelId}/rooms")
+    public ResponseEntity<List<RoomResponse>> getRoomsByHotel(@PathVariable Long hotelId) {
+        return ResponseEntity.ok(roomService.getRoomsByHotel(hotelId));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Room> reserveRoom (@PathVariable Long id){
-        Room room = roomService.reserveRoom(id);
-        return ResponseEntity.ok(room);
+    @GetMapping("/rooms/{id}")
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable Long id) {
+        return ResponseEntity.ok(roomService.getRoomById(id));
     }
 
+    @PutMapping("/rooms/{id}")
+    public ResponseEntity<RoomResponse> updateRoom(
+            @PathVariable Long id,
+            @Valid @RequestBody RoomCreateRequest request) {
+        return ResponseEntity.ok(roomService.updateRoom(id, request));
+    }
+
+    @PatchMapping("/rooms/{id}/status")
+    public ResponseEntity<RoomResponse> updateRoomStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody RoomStatusUpdateRequest request) {
+        return ResponseEntity.ok(roomService.updateRoomStatus(id, request));
+    }
+
+    @DeleteMapping("/rooms/{id}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
+        roomService.deleteRoom(id);
+        return ResponseEntity.noContent().build();
+    }
 }
